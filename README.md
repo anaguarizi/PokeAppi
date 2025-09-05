@@ -1,7 +1,5 @@
 # React + TypeScript + Vite POKÉDEX
 
-## Expanding the ESLint configuration
-
 # Página inicial
 <img width="1918" height="942" alt="image" src="https://github.com/user-attachments/assets/72a2fdfa-1158-489a-9159-2b3ed6bcbee5" />
 
