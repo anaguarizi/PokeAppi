@@ -1,6 +1,11 @@
+import { redirect } from "@tanstack/react-router";
+
 export const useAuth = () => {
   const signIn = () => {
     localStorage.setItem('isAuthenticated', 'true');
+    throw redirect({
+    to: "/profile",
+  });
   };
 
   const signOut = () => {

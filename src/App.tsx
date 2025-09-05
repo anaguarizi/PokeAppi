@@ -1,6 +1,6 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { routeTree } from './routeTree.gen'
+import { routeTree } from './routeTree.gen';
 import { useAuth } from './hooks/useAuth';
 
 const router = createRouter({

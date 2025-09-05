@@ -19,8 +19,8 @@ type Pokemon = {
     img: string;
 }
 
-export async function getPokemonList(): Promise<Pokemon[]> {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=45`);
+export async function getPokemonList(loadedQnt: number): Promise<Pokemon[]> {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=45&offset=${loadedQnt}`);
     const data = (await res.json()) as {
         results: { name: string; url: string}[];
     };

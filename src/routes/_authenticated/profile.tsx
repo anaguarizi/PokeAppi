@@ -1,4 +1,5 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect, } from '@tanstack/react-router';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Route = createFileRoute('/_authenticated/profile')({
   beforeLoad: ({ context }) => {
@@ -13,5 +14,15 @@ export const Route = createFileRoute('/_authenticated/profile')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/profile"!</div>
+  return (
+    <div>
+      <p>Hello "/profile"!</p>
+      <button onClick={async () => {
+        useAuth().signOut();
+      }}
+      >
+        Sign out
+      </button>
+    </div>
+  )
 }
