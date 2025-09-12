@@ -1,10 +1,7 @@
-import { redirect } from "@tanstack/react-router";
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 
 export const userSchema = z.object({
-  username: z.string(),
+  username: z.string().optional(),
   email: z.string().email(),
   password: z.string().min(6),
 });
@@ -12,19 +9,16 @@ export const userSchema = z.object({
 export type UserForm = z.infer<typeof userSchema>;
 
 export const useAuth = () => {
-
-  const signIn = () => {
+  const signIn = (data: UserForm) => {
+    const result = userSchema.safeParse(data)
     localStorage.setItem('isAuthenticated', 'true');
-    throw redirect({
-      to: "/profile",
-    });
+    return result;
   };
 
   const registerUser = (data: UserForm) => {
+    const result = userSchema.safeParse(data)
     localStorage.setItem('isAuthenticated', 'true');
-    throw redirect({
-      to: "/profile",
-    });
+    return result;
   };
 
   const signOut = () => {

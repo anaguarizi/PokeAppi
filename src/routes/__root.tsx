@@ -29,7 +29,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                         </Link>
                     </li>
                     <li className="inline-block mx-[1rem] text-[#B1D8B7]">
-                        <Link to="/settings" activeProps={activeProps}>
+                        <Link to="/configuracoes" activeProps={activeProps}>
                             Configurações
                         </Link>
                     </li>

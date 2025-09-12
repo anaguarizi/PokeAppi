@@ -15,9 +15,9 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PokemonPokemonListRouteImport } from './routes/pokemon/pokemonList'
 import { Route as PokemonIdRouteImport } from './routes/pokemon/$id'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedSalvosRouteImport } from './routes/_authenticated/salvos'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedConfiguracoesRouteImport } from './routes/_authenticated/configuracoes'
 
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
@@ -49,11 +49,6 @@ const PokemonIdRoute = PokemonIdRouteImport.update({
   path: '/pokemon/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/_authenticated/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedSalvosRoute = AuthenticatedSalvosRouteImport.update({
   id: '/_authenticated/salvos',
   path: '/salvos',
@@ -64,15 +59,21 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedConfiguracoesRoute =
+  AuthenticatedConfiguracoesRouteImport.update({
+    id: '/_authenticated/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/salvos': typeof AuthenticatedSalvosRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/pokemon/$id': typeof PokemonIdRoute
   '/pokemon/pokemonList': typeof PokemonPokemonListRoute
 }
@@ -81,9 +82,9 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/salvos': typeof AuthenticatedSalvosRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/pokemon/$id': typeof PokemonIdRoute
   '/pokemon/pokemonList': typeof PokemonPokemonListRoute
 }
@@ -93,9 +94,9 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
+  '/_authenticated/configuracoes': typeof AuthenticatedConfiguracoesRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/salvos': typeof AuthenticatedSalvosRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/pokemon/$id': typeof PokemonIdRoute
   '/pokemon/pokemonList': typeof PokemonPokemonListRoute
 }
@@ -106,9 +107,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/configuracoes'
     | '/profile'
     | '/salvos'
-    | '/settings'
     | '/pokemon/$id'
     | '/pokemon/pokemonList'
   fileRoutesByTo: FileRoutesByTo
@@ -117,9 +118,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/configuracoes'
     | '/profile'
     | '/salvos'
-    | '/settings'
     | '/pokemon/$id'
     | '/pokemon/pokemonList'
   id:
@@ -128,9 +129,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/search'
+    | '/_authenticated/configuracoes'
     | '/_authenticated/profile'
     | '/_authenticated/salvos'
-    | '/_authenticated/settings'
     | '/pokemon/$id'
     | '/pokemon/pokemonList'
   fileRoutesById: FileRoutesById
@@ -140,9 +141,9 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   SearchRoute: typeof SearchRoute
+  AuthenticatedConfiguracoesRoute: typeof AuthenticatedConfiguracoesRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedSalvosRoute: typeof AuthenticatedSalvosRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   PokemonIdRoute: typeof PokemonIdRoute
   PokemonPokemonListRoute: typeof PokemonPokemonListRoute
 }
@@ -191,13 +192,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokemonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/salvos': {
       id: '/_authenticated/salvos'
       path: '/salvos'
@@ -212,6 +206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/configuracoes': {
+      id: '/_authenticated/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof AuthenticatedConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -220,9 +221,9 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   SearchRoute: SearchRoute,
+  AuthenticatedConfiguracoesRoute: AuthenticatedConfiguracoesRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedSalvosRoute: AuthenticatedSalvosRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   PokemonIdRoute: PokemonIdRoute,
   PokemonPokemonListRoute: PokemonPokemonListRoute,
 }

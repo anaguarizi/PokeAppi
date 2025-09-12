@@ -1,5 +1,5 @@
-import { createFileRoute, Link, redirect, } from '@tanstack/react-router';
-import { type UserForm, userSchema } from '../hooks/useAuth';
+import { createFileRoute, Link, redirect, useRouter, } from '@tanstack/react-router';
+import { useAuth, type UserForm, userSchema } from '../hooks/useAuth';
 import { AbsoluteCenter, Box, Button, Container, FormControl, FormLabel, Heading, Input, Text } from '@chakra-ui/react';
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,26 +21,21 @@ export const Route = createFileRoute('/register')({
 });
 
 function Login() {
+    const router = useRouter();
 
-    const onSubmit: SubmitHandler<UserForm> = async (data) => {
-        try {
-            await new Promise((resolver) => setTimeout(resolver, 1000));
-            console.log(data)
-        } catch (error) {
-            setError("root", {
-                message: "This email is already taken",
-            })
-        }
+    const onSubmit: SubmitHandler<UserForm> = (data) => {
+        const result = useAuth().registerUser(data);
+        console.log(result)
+        router.navigate({ to: '/profile' })
     }
 
     const {
         register,
         handleSubmit,
-        setError,
         formState: { errors },
     } = useForm<UserForm>({
         defaultValues: {
-            email: "test@email.com",
+            email: "",
         },
         resolver: zodResolver(userSchema),
     });

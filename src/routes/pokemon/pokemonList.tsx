@@ -4,11 +4,12 @@ import { useQuery, QueryClient, QueryClientProvider, useQueryClient } from '@tan
 import {
   Card, CardBody, Image, Stack, Heading, Modal, ModalContent, useDisclosure, ModalHeader,
   ModalCloseButton, ModalBody, ModalOverlay, TableContainer, Table, Thead, Tr, Th, Td,
-  Button, Flex, Text, CircularProgress
+  Button, Flex, Text, CircularProgress,
+  IconButton
 } from '@chakra-ui/react'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
-
-import { getPokemon, getPokemonList, type PokemonDetail } from '../../api/pokemon';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { getPokemon, getPokemonList, useFavoritePokemon, type PokemonDetail } from '../../api/pokemon';
 
 const queryClient = new QueryClient()
 export const Route = createFileRoute('/pokemon/pokemonList')({
@@ -21,6 +22,18 @@ function App() {
       <Pokemonlist />
     </QueryClientProvider>
   )
+}
+
+function CheckFavorite({pokemon}: any) {
+  const addPokemon = useFavoritePokemon((state) => state.addPokemon)
+  const removePokemon = useFavoritePokemon((state) => state.removePokemon)
+  const isFavorite = useFavoritePokemon((state) => state.searchPokemon(pokemon?.id));
+
+  return (
+    <IconButton aria-label='Favoritar' icon={isFavorite ? <FaHeart /> : <FaRegHeart />}
+      size='lg' variant='link' padding='0.5rem' _hover={{ bg: '#B1D8B7' }}
+      onClick={() => !isFavorite ? addPokemon(pokemon) : removePokemon(pokemon?.id)}
+    />)
 }
 
 function Pokemonlist() {
@@ -69,17 +82,19 @@ function Pokemonlist() {
       <ul className='grid grid-cols-9 bg-[#e8ebe3]'>
         {query.data?.map((pokemon) => (
           <div>
-            <li key={pokemon.id} className='hover:text-[#1c301c] text-center mb-[3rem] mx-[1rem]' onClick={() => detail(pokemon.id)}>
-              <button>
-                <Card shadow='md' bgColor='#f1f3ed'>
-                  <CardBody className='hover:text-emerald-800 hover:cursor-pointer'>
+            <li key={pokemon.id} className='text-center mb-[3rem] mx-[1rem]'>
+              <Card shadow='md' bgColor='#f1f3ed'>
+                <CardBody className='hover:text-emerald-800 hover:cursor-pointer'>
+                  <br />
+                  <CheckFavorite pokemon={pokemon} />
+                  <button onClick={() => detail(pokemon.id)}>
                     <Image src={pokemon.img} alt={pokemon.name} className='m-auto' />
                     <Stack mt='6' spacing='3'>
                       <Heading size='md'>{pokemon.name}</Heading>
                     </Stack>
-                  </CardBody>
-                </Card>
-              </button>
+                  </button>
+                </CardBody>
+              </Card>
             </li>
           </div>
         ))}
